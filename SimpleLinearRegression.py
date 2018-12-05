@@ -35,7 +35,7 @@ plot.show()
 #plot the graph with test data and predict train data
 
 plot.scatter(x_test,y_test,edgecolors='red')
-plot.plot(x_train,simpleLinear.predict(x_train,color='blue'))
+plot.plot(x_train,simpleLinear.predict(x_train),color='blue')
 plot.title("Grpah for Test data with Predict")
 plot.xlabel("Experience")
 plot.ylabel("Salary")
