@@ -33,7 +33,6 @@ X = oneHotEncoder_X.fit_transform(X).toarray()
 X_train,X_test,Y_train,Y_test = train_test_split(X,Y,test_size=0.25,random_state=5)
 
 # feature Scaling the data so that values between them wont differ long
-
 X_sandardScaler = StandardScaler()
 X_train = X_sandardScaler.fit_transform(X_train)
 X_test = X_sandardScaler.transform(X_test)
