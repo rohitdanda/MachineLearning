@@ -1,30 +1,35 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plot
-from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import confusion_matrix
 from matplotlib.colors import ListedColormap
+datasets = pd.read_csv("SVM/Social_Network_Ads.csv")
 
-datasets = pd.read_csv("KNN/Social_Network_Ads.csv")
+x = datasets.iloc[:,2:4].values
+y = datasets.iloc[:,4].values
 
-X = datasets.iloc[:,2:4].values
-Y = datasets.iloc[:,4].values
+x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.25,random_state=0)
 
-X_train,X_test,Y_train,Y_test = train_test_split(X,Y,test_size=0.25,random_state=0)
+scaler = StandardScaler()
 
-featureScaling = StandardScaler()
-X_train = featureScaling.fit_transform(X_train)
-X_test = featureScaling.transform(X_test)
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.transform(x_test)
 
-classifer = KNeighborsClassifier(n_neighbors=5,metric='minkowski',p=2)
-classifer.fit(X_train,Y_train)
-Y_predict = classifer.predict(X_test)
+classifer = SVC(kernel='linear', random_state=0)
+classifer.fit(x_train,y_train)
+y_predct = classifer.predict(x_test)
+
+## confusion matrix used to find the error predict from the test values
+
+cm = confusion_matrix(y_test,y_predct)
 
 ##visulae the Graph
-X , Y = X_train,Y_train
+X , Y = x_train,y_train
 
-X_set, y_set = X_test,Y_test
+X_set, y_set = x_test,y_test
 X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1, stop = X_set[:, 0].max() + 1, step = 0.01),
                      np.arange(start = X_set[:, 1].min() - 1, stop = X_set[:, 1].max() + 1, step = 0.01))
 plot.contourf(X1, X2, classifer.predict(np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),
