@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plot
+from docutils.nodes import classifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
@@ -18,7 +19,7 @@ scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 
-classifer = SVC(kernel='linear', random_state=0)
+classifer = SVC(kernel='rbf',C=1000, random_state=0)
 classifer.fit(x_train,y_train)
 y_predct = classifer.predict(x_test)
 
